@@ -1,5 +1,9 @@
+# RHEL/Rocky Linux 8
+
 ```sh
 # Install the OS packages lvm2, iptables, sysstat, and net-tools by executing
+sudo dnf config-manager --set-enabled powertools
+sudo dnf install epel-release
 
 sudo dnf install lvm2 iptables sysstat net-tools
 
@@ -10,7 +14,7 @@ sudo dnf remove docker docker-ce podman podman-remote containerd.io
 SELINUX=disabled
 
 # Install podman
-sudo dnf install podman podman-remote
+sudo dnf install podman podman-remote podman-docker podman-compose
 
 
 # If podman requires a proxy in your infrastructure setup, modify the /usr/share/containers/containers.conf file and add the HTTP_PROXY and HTTPS_PROXY environment variables in the [engine] section. Please note that multiple env variables in that configuration file exists — use the one in the [engine] section.
