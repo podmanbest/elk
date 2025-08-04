@@ -13,9 +13,10 @@ sudo dnf install -y podman python3 git
 Create a regular OS user to avoid bugs with podman userids, also assign wheel group privileges for sudo.
 
 ```sh
-sudo useradd -m -d /home/elk elk && \
-sudo usermod -a -G wheel elk && \
-sudo su - elk
+sudo groupadd podman
+sudo useradd -m -d /home/elastic elastic && \
+sudo usermod -a -G podman elastic && \
+sudo su - elastic
 ```
 
 Install podman-compose for regular user.
@@ -27,10 +28,10 @@ python3 -m pip install --user podman-compose
 Clone the repo and CD into it.
 
 ```sh
-git clone https://github.com/aldenso/elk-podman && cd elk-podman
+git clone https://github.com/podmanbest/elk.git && cd elk
 ```
 
-Create a Data directory for elastic and disable SELinux (yes... I know, but fuc** it, this is a lab).
+Create a Data directory for elastic and disable SELinux (yes... I know, but fuc\*\* it, this is a lab).
 
 ```sh
 mkdir -p /tmp/elk/data
@@ -41,7 +42,7 @@ Export the desired ELK version and build the images.
 
 ```sh
 export ELK_VERSION=7.9.2
-podman-compose -f podman-compose.yml build
+podman-compose -f compose.yml build
 ```
 
 Enable the followin ports for testing.
@@ -56,7 +57,7 @@ sudo firewall-cmd --reload
 Remember to enable the same ports in case you are testing in your cloud and not your local machine.
 
 ```sh
-podman-compose -f podman-compose.yml up
+podman-compose -f compose.yml up
 ```
 
 Export the PUBLIC IP (your external cloud IP, assigned to your VM), in case you are using your local machine use 'localhost'.
